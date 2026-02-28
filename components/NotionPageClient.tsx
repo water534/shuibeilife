@@ -32,11 +32,9 @@ const Code = dynamic(
       import("prismjs/components/prism-typescript"),
       // @ts-ignore
       import("prismjs/components/prism-bash"),
-    ])
     ]).then(([Code]) => Code),
   { ssr: false }
 );
-
 const EmptyComponent = () => null;
 
 interface NotionPageClientProps {
