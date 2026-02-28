@@ -1,0 +1,688 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* react-notion-x 核心样式 */
+@import "react-notion-x/src/styles.css";
+@import "prismjs/themes/prism-tomorrow.css";
+@import "katex/dist/katex.min.css";
+
+/* ========================================
+   全局字体 & 基础
+   ======================================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  line-height: 1.6 !important;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+@layer base {
+  html { @apply text-gray-900 antialiased; }
+  body { @apply bg-white min-h-screen; }
+}
+
+/* ========================================
+   导航返回按钮
+   ======================================== */
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #86868b;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  transition: color 0.25s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+}
+
+.btn-back:hover {
+  color: #1a1a1a;
+}
+
+.btn-back svg {
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.btn-back:hover svg {
+  transform: translateX(-3px);
+}
+
+/* ========================================
+   L2 顶部返回首页行
+   ======================================== */
+
+.page-back-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+/* ========================================
+   L4 正文页顶部标题行
+   ======================================== */
+
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.post-header-title {
+  flex: 1;
+  font-size: 22px;
+  font-weight: 600;
+  color: #1a1a1a;
+  line-height: 1.3;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+/* ========================================
+   卡片橙色渐变边框（与首页一致）
+   ======================================== */
+
+.card-orange-border {
+  background: linear-gradient(90deg, #fed7aa, #fb923c, #fed7aa) !important;
+}
+
+/* ========================================
+   页脚链接
+   ======================================== */
+
+.footer-link {
+  color: #9ca3af;
+  font-size: 16px;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: #374151;
+}
+
+.footer-sub {
+  display: block;
+  margin-top: 8px;
+  color: #9ca3af;
+  font-size: 13px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-sub:hover {
+  color: #374151;
+}
+
+/* ========================================
+   Modal 关闭按钮 hover（替代 inline onMouseEnter）
+   ======================================== */
+
+.modal-close-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  transform: scale(1.1);
+}
+
+/* ========================================
+   NProgress 品牌橙色进度条
+   ======================================== */
+
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  background: #FF4500;
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+}
+
+#nprogress .peg {
+  display: block;
+  position: absolute;
+  right: 0;
+  width: 100px;
+  height: 100%;
+  box-shadow: 0 0 10px #FF4500, 0 0 5px #FF4500;
+  opacity: 1;
+  transform: rotate(3deg) translate(0px, -4px);
+}
+
+/* ========================================
+   图片淡入过渡
+   ======================================== */
+
+.notion-collection-card-cover img,
+.notion-asset-wrapper img,
+.notion-image-block img {
+  animation: imgFadeIn 0.4s ease forwards;
+}
+
+@keyframes imgFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes ripple-expand {
+  0%   { width: 8px; height: 8px; opacity: 1; }
+  100% { width: 280px; height: 280px; opacity: 0; }
+}
+
+/* ========================================
+   渐显效果
+   ======================================== */
+
+.notion-content-fade-in {
+  opacity: 0;
+  animation: contentFadeIn 0.4s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes contentFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================
+   页面容器约束
+   ======================================== */
+
+.notion-page,
+.notion-collection,
+.notion-gallery,
+.notion-gallery-view,
+.notion-page-content {
+  max-width: 1024px !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+  background: transparent !important;
+}
+
+/* 详情页：消除顶部多余留白 */
+.notion-page-content {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* ========================================
+   导航
+   ======================================== */
+
+nav {
+  position: relative !important;
+  width: 100% !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  flex-shrink: 0 !important;
+}
+
+nav a {
+  font-size: 16px !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* ========================================
+   隐藏 Notion 原生页眉 / 大标题区域
+   ======================================== */
+
+.notion-header,
+.notion-topbar,
+.notion-nav-header,
+.notion-page-header,
+.notion-page-header-wrapper {
+  display: none !important;
+}
+
+/* 隐藏卡片内图标（不影响正文链接图标） */
+.notion-collection-card .notion-page-icon,
+.notion-collection-card .notion-page-icon-inline,
+.notion-collection-card .notion-page-title-icon,
+.notion-collection-card .notion-page-title-icon-inline,
+.notion-property-icon {
+  display: none !important;
+}
+
+/* ========================================
+   标题层级 — 详情页内容标题
+   ======================================== */
+
+.notion-h1 {
+  font-size: 24px !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.5em !important;
+  color: #1A1A1A !important;
+}
+
+.notion-h2 {
+  font-size: 20px !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.5em !important;
+  color: #1A1A1A !important;
+}
+
+.notion-h3 {
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+  margin-top: 1rem !important;
+  margin-bottom: 0.5em !important;
+  color: #1A1A1A !important;
+}
+
+/* ========================================
+   正文内容
+   ======================================== */
+
+.notion-page-content {
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+}
+
+.notion-text {
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+  margin: 0.25rem 0 !important;
+  color: #333 !important;
+}
+
+.notion-list-item,
+.notion-bulleted-list,
+.notion-numbered-list,
+.notion-to-do,
+.notion-toggle,
+.notion-callout {
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+}
+
+.notion-quote {
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+  padding-left: 1rem !important;
+  border-left: 3px solid #e5e5e5 !important;
+  color: #555 !important;
+}
+
+.notion-code {
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+}
+
+.notion-divider {
+  margin: 1.5rem 0 !important;
+}
+
+/* 详情页内嵌页面链接 block — 降权到正文尺寸 */
+.notion-page-link {
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  color: #333 !important;
+  padding: 4px 0 !important;
+  border-bottom: 1px solid #f0f0f0 !important;
+}
+
+.notion-page-link:hover {
+  color: #000 !important;
+  border-bottom-color: #FF4500 !important;
+}
+
+.notion-page-link .notion-page-title-text {
+  font-size: 15px !important;
+  font-weight: 400 !important;
+}
+
+/* ========================================
+   链接 — 橙色点缀
+   ======================================== */
+
+.notion-link {
+  color: #FF4500 !important;
+  border-bottom: 1px solid rgba(255, 69, 0, 0.2) !important;
+  text-decoration: none !important;
+}
+
+.notion-link:hover {
+  border-bottom-color: #FF4500 !important;
+}
+
+/* ========================================
+   移动端安全区 & 底部导航留白
+   ======================================== */
+
+@media (max-width: 768px) {
+  body {
+    padding-bottom: calc(56px + env(safe-area-inset-bottom)) !important;
+  }
+}
+
+/* ========================================
+   移动端 Notion 横向溢出修复
+   ======================================== */
+
+@media (max-width: 768px) {
+  .notion-page-content,
+  .notion-text,
+  .notion-h1,
+  .notion-h2,
+  .notion-h3,
+  .notion-list-item,
+  .notion-callout,
+  .notion-quote,
+  .notion-code {
+    overflow-x: hidden !important;
+    word-break: break-word !important;
+    max-width: 100% !important;
+  }
+
+  .notion-asset-wrapper,
+  .notion-image-block {
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  /* 知识库容器移动端宽度 */
+  #notion-custom-container {
+    width: 92% !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* ========================================
+   画廊网格 — 二级页面
+   ======================================== */
+
+.notion-gallery-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  grid-auto-rows: 1fr !important;
+  align-items: stretch !important;
+  gap: 24px !important;
+  min-height: 50vh !important;
+  border-top: none !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+@media (max-width: 1200px) {
+  .notion-gallery-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .notion-gallery-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+}
+
+/* ========================================
+   卡片容器
+   ======================================== */
+
+.notion-collection-card {
+  display: flex !important;
+  flex-direction: column !important;
+  background: #ffffff !important;
+  border-radius: 12px !important;
+  border: 1px solid #e5e5e5 !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  align-items: stretch !important;
+}
+
+.notion-collection-card:hover {
+  border-color: #fb923c !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* ========================================
+   卡片结构：图片 → 标题 → 描述（DOM 自然顺序）
+   ======================================== */
+
+.notion-collection-card-cover {
+  aspect-ratio: 3 / 2 !important;
+  width: 100% !important;
+  position: relative !important;
+  flex-shrink: 0 !important;
+  overflow: hidden !important;
+}
+
+.notion-collection-card-cover img,
+.notion-collection-card-cover span {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+/* body 统一管理所有内边距，property 在 body 内，不需要额外 padding */
+.notion-collection-card .notion-collection-card-body {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 10px 14px 12px !important;
+  gap: 4px !important;
+}
+
+.notion-collection-card-property {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.notion-collection-card-property .notion-property,
+.notion-collection-card-property .notion-property-text {
+  font-size: 12px !important;
+  color: #999 !important;
+  line-height: 1.5 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* ========================================
+   卡片标题
+   ======================================== */
+
+.notion-collection-card .notion-page-title,
+.notion-collection-card .notion-page-title-text,
+.notion-collection-card [class*="notion-page-title"] {
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  color: #1A1A1A !important;
+  line-height: 1.4 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.notion-collection-card * {
+  text-align: left !important;
+}
+
+/* ========================================
+   画册头部
+   ======================================== */
+
+/* 隐藏二级页面所有标题来源 */
+.notion-collection-header,
+.notion-collection-header-title,
+.notion-collection-view-tabs-row {
+  display: none !important;
+}
+
+.notion-collection-view-dropdown,
+.notion-collection-view-type {
+  display: none !important;
+}
+
+/* ========================================
+   Modal — 物理隔离
+   ======================================== */
+
+#peek-container .notion-page,
+.modal-notion-content .notion-page {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+#peek-container .notion-gallery-grid,
+.modal-notion-content .notion-gallery-grid {
+  grid-template-columns: repeat(2, 1fr) !important;
+  min-height: auto !important;
+  gap: 16px !important;
+}
+
+@media (max-width: 768px) {
+  #peek-container .notion-gallery-grid,
+  .modal-notion-content .notion-gallery-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+#peek-container .notion-collection-card,
+.modal-notion-content .notion-collection-card {
+  min-height: 160px !important;
+}
+
+#peek-container .notion-title,
+#peek-container .notion-page-header,
+.modal-notion-content .notion-title,
+.modal-notion-content .notion-page-header {
+  display: none !important;
+}
+
+#peek-container .notion-h1,
+.modal-notion-content .notion-h1 { font-size: 22px !important; }
+
+#peek-container .notion-h2,
+.modal-notion-content .notion-h2 { font-size: 18px !important; }
+
+#peek-container .notion-h3,
+.modal-notion-content .notion-h3 { font-size: 16px !important; }
+
+.notion-modal-content::-webkit-scrollbar { width: 6px; }
+.notion-modal-content::-webkit-scrollbar-track { background: transparent; }
+.notion-modal-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 3px;
+}
+.notion-modal-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* ========================================
+   三级页面（Modal 内）— 清除多余黑色线条
+   ======================================== */
+
+/* 清除 notion-page-link 的下边框（黑线来源之一） */
+#peek-container .notion-page-link,
+.modal-notion-content .notion-page-link {
+  border-bottom: none !important;
+  border: none !important;
+}
+
+/* 清除 notion-collection-card 在 modal 内的边框 */
+#peek-container .notion-collection-card,
+.modal-notion-content .notion-collection-card {
+  border-color: #e5e5e5 !important;
+}
+
+/* 清除 notion-table / notion-simple-table 的黑色边框 */
+#peek-container .notion-simple-table,
+#peek-container .notion-simple-table td,
+#peek-container .notion-simple-table th,
+.modal-notion-content .notion-simple-table,
+.modal-notion-content .notion-simple-table td,
+.modal-notion-content .notion-simple-table th {
+  border-color: #e5e5e5 !important;
+}
+
+/* 清除 notion-hr / notion-divider 的黑色 */
+#peek-container .notion-hr,
+#peek-container .notion-divider,
+.modal-notion-content .notion-hr,
+.modal-notion-content .notion-divider {
+  border-color: #f0f0f0 !important;
+  background-color: #f0f0f0 !important;
+}
+
+/* 清除 callout / quote 的黑色左边框 */
+#peek-container .notion-callout,
+.modal-notion-content .notion-callout {
+  border: 1px solid #f0f0f0 !important;
+  background: #fafafa !important;
+}
+
+#peek-container .notion-quote,
+.modal-notion-content .notion-quote {
+  border-left-color: #e5e5e5 !important;
+}
+
+/* 清除 notion-toggle 的边框 */
+#peek-container .notion-toggle,
+.modal-notion-content .notion-toggle {
+  border: none !important;
+}
+
+/* 清除 notion-asset-wrapper / image block 的黑色边框 */
+#peek-container .notion-asset-wrapper,
+#peek-container .notion-image-block,
+.modal-notion-content .notion-asset-wrapper,
+.modal-notion-content .notion-image-block {
+  border: none !important;
+}
+
+/* 清除 notion-code 的黑色边框 */
+#peek-container .notion-code,
+.modal-notion-content .notion-code {
+  border-color: #e5e5e5 !important;
+}
+
+/* 清除 notion-collection-header 底部线 */
+#peek-container .notion-collection-header,
+.modal-notion-content .notion-collection-header {
+  border-bottom-color: #f0f0f0 !important;
+}
