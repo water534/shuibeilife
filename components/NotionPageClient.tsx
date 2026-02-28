@@ -24,13 +24,15 @@ const Code = dynamic(
   () =>
     Promise.all([
       import("react-notion-x/build/third-party/code").then((m) => m.Code),
+      // @ts-ignore
       import("prismjs/components/prism-markup"),
+      // @ts-ignore
       import("prismjs/components/prism-javascript"),
+      // @ts-ignore
       import("prismjs/components/prism-typescript"),
+      // @ts-ignore
       import("prismjs/components/prism-bash"),
-      import("prismjs/components/prism-python"),
-      import("prismjs/components/prism-css"),
-      import("prismjs/components/prism-json"),
+    ])
     ]).then(([Code]) => Code),
   { ssr: false }
 );
