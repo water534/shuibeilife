@@ -20,6 +20,7 @@ const Equation = dynamic(
   { ssr: false }
 );
 
+// @ts-ignore
 const Code = dynamic(
   () =>
     Promise.all([
@@ -32,9 +33,11 @@ const Code = dynamic(
       import("prismjs/components/prism-typescript"),
       // @ts-ignore
       import("prismjs/components/prism-bash"),
-    ]).then(([Code]) => Code),
+    ]).then(([CodeComponent]) => CodeComponent as any),
   { ssr: false }
-);
+) as any;
+
+
 const EmptyComponent = () => null;
 
 interface NotionPageClientProps {
